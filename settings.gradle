@@ -1,0 +1,2 @@
+rootProject.name='textToCal'
+include ':app'
