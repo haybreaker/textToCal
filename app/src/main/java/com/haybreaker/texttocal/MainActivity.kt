@@ -1,17 +1,10 @@
 package com.haybreaker.texttocal
 
 import android.Manifest
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.CalendarContract.CalendarCache.URI
-import android.provider.Telephony
-import android.telephony.SmsMessage
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -21,13 +14,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_SMS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_SMS), 111)
+            lastSyncMessage.text = "Double Crap"
         }
         else{
             readMessages()
@@ -35,8 +27,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun readMessages() {
-        TODO("Not finished")
 
+        var cr = contentResolver.query(
+            Uri.parse("content://sms/inbox"),
+            null,
+            null,
+            null,
+            null
+        )
 
+        if(cr.moveToFirst()){
+            do {
+                if(cr!= null && cr.moveToFirst()){
+                    do {
+                        lastSyncMessage.text = lastSyncMessage.text.toString() + " " +cr.getString(cr.getColumnIndex("body"))
+                    }while(cr.moveToNext())
+                }
+            }while(cr.moveToNext())
+        }
     }
 }
