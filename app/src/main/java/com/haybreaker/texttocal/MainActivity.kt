@@ -19,14 +19,27 @@ class MainActivity : AppCompatActivity() {
                 Manifest.permission.READ_SMS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            lastSyncMessage.text = "Double Crap"
+            TODO("not implemented") //Input request permission function here
         }
         else{
-            readMessages()
+
+            //Now that permissions are set correctly go through and run following functions
+            //Grab all relevant messages
+            var relevantMessages: MutableList<String> = readMessages()
+            //Put messages through algorithm to grab array of shifts
+            //shiftsToImport: MutableList<String> = textToShifts(relevantMessages)
+            //Now import shifts to calender
+            importToCalender(relevantMessages)
+
         }
+
     }
 
-    private fun readMessages() {
+    private fun readMessages(): MutableList<String> {
+
+        var messagesList: MutableList<String> = ArrayList()
+
+        //Create contentResolver to parse through all sms messages
 
         var cr = contentResolver.query(
             Uri.parse("content://sms/inbox"),
@@ -36,14 +49,40 @@ class MainActivity : AppCompatActivity() {
             null
         )
 
-        if(cr.moveToFirst()){
+
+        //If exists any textMessages then go through and find ones from particular number then read body of those messages.
+        if (cr.moveToFirst()) {
             do {
-                if(cr!= null && cr.moveToFirst()){
+                if (cr != null && cr.moveToFirst()) {
                     do {
-                        lastSyncMessage.text = lastSyncMessage.text.toString() + " " +cr.getString(cr.getColumnIndex("body"))
-                    }while(cr.moveToNext())
+                        val message = cr.getString(cr.getColumnIndex("body"))
+
+                        if (cr.getString(cr.getColumnIndex("address")) == "0417262921") {
+                            messagesList.add(message)
+                        }
+
+                        //LEGACY - Base understanding of how to read texts from cursor
+                        //lastSyncMessage.text = lastSyncMessage.text.toString() + " " +cr.getString(cr.getColumnIndex("body"))
+
+                    } while (cr.moveToNext())
                 }
-            }while(cr.moveToNext())
+            } while (cr.moveToNext())
+
+            //Time to write a comment :)
+            //Clear the message and then display all messages for debugging
+
+            lastSyncMessage.text = ""
+
+            for (item in messagesList) {
+                lastSyncMessage.text = lastSyncMessage.text.toString() + "\n " + item.toString()
+            }
         }
+            return messagesList
     }
+
+    private fun importToCalender(relevantMessages: MutableList<String>){
+
+    }
+
+    //Close off all functions by here
 }

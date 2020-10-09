@@ -15,17 +15,18 @@
 
         <TextView
             android:id="@+id/lastSyncMessage"
-            android:layout_width="match_parent"
-            android:layout_height="41dp"
-            android:layout_marginTop="689dp"
+            android:layout_width="412dp"
+            android:layout_height="403dp"
+            android:paddingBottom="15dp"
             android:text="Why won't you show"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:paddingBottom="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
