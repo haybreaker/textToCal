@@ -8,11 +8,14 @@ import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        calendarSetup()
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
             != PackageManager.PERMISSION_GRANTED
@@ -28,8 +31,12 @@ class MainActivity : AppCompatActivity() {
             var shiftData: MutableList<String> = calculateShifts(relevantMessages)
             //Import all calculated data into calender
             importToCal(shiftData)
-
         }
+
+    }
+    private fun calendarSetup(){
+
+
 
     }
 
@@ -86,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
         //Create the muteable list for holding raw data
 
-        var calenderData: MutableList<String> = ArrayList()
+        var calendarData: MutableList<String> = ArrayList()
 
         for(texts in relevantMessages){
             val lines = texts.split('\n')
@@ -111,16 +118,16 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                         //End of if statement so anything for text with date in it
-                        calenderData.add(shiftMonth)
-                        calenderData.add(shiftDate)
-                        calenderData.add(startTime)
-                        calenderData.add(finishTime)
+                        calendarData.add(shiftMonth)
+                        calendarData.add(shiftDate)
+                        calendarData.add(startTime)
+                        calendarData.add(finishTime)
                     }
                 }
 
             }
         }
-        return calenderData
+        return calendarData
     }
 
     private fun importToCal(shiftData: MutableList<String>){
