@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">textToCal</string>
+    <string name="API_KEY">AIzaSyCAph0vbrDvxrGq4MmFtkFlfQQe3xr2_Fk</string>
 </resources>
