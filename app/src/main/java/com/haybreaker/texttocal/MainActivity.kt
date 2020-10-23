@@ -31,7 +31,6 @@ import com.google.api.services.calendar.model.Events;
 import java.io.InputStream
 import java.io.InputStreamReader
 
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         else{
             //Permissions set so now we wait for import to be initiated by user
             importButton.setOnClickListener(){
+                Toast.makeText(this, "Import starting...", Toast.LENGTH_SHORT).show()
                 //Now that permissions are set correctly go through and run following functions
                 //Grab all relevant messages
                 var relevantMessages: MutableList<String> = readMessages()
@@ -64,26 +64,6 @@ class MainActivity : AppCompatActivity() {
             return@setOnLongClickListener  true
 
         }
-    }
-
-    private fun calendarSetup() {
-        //Initialise initial variables to connect with google API
-        /*var applicationName = "textToCal"
-        var jsonFactory = JacksonFactory.getDefaultInstance()
-        var tokensDirectoryPath = "tokens"
-
-        //Further variables delcared however if changes made need to delete tokens
-        var SCOPES: List<String> = Collections.singletonList(CalendarScopes.CALENDAR_READONLY)
-        var credentialsFilePath = "/credentials.json"
-
-        //Finalize other parts, more description to come
-        var Credential = getCredentials(var NetHttpTransport HTTP_TRANSPORT){
-            // Load client secrets.
-            InputStream in = CalendarQuickstart .class.getResourceAsStream(CREDENTIALS_FILE_PATH)
-        }
-
-        var clientSecrets: GoogleClientSecrets =
-            GoogleClientSecrets.load(jsonFactory, InputStreamReader(in))*/
     }
 
     private fun readMessages(): MutableList<String> {
@@ -175,6 +155,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return calendarData
+    }
+
+    private fun calendarSetup() {
+        //Initialise initial variables to connect with google API
+        /*var applicationName = "textToCal"
+        var jsonFactory = JacksonFactory.getDefaultInstance()
+        var tokensDirectoryPath = "tokens"
+
+        //Further variables delcared however if changes made need to delete tokens
+        var SCOPES: List<String> = Collections.singletonList(CalendarScopes.CALENDAR_READONLY)
+        var credentialsFilePath = "/credentials.json"
+
+        //Finalize other parts, more description to come
+        var Credential = getCredentials(var NetHttpTransport HTTP_TRANSPORT){
+            // Load client secrets.
+            InputStream in = CalendarQuickstart .class.getResourceAsStream(CREDENTIALS_FILE_PATH)
+        }
+
+        var clientSecrets: GoogleClientSecrets =
+            GoogleClientSecrets.load(jsonFactory, InputStreamReader(in))*/
     }
 
     private fun importToCal(shiftData: MutableList<String>){
